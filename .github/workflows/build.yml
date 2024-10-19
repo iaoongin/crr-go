@@ -24,17 +24,17 @@ jobs:
 
       - name: Set Output Variables
         run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
+          if [ "${{ runner.os }}" = "Windows" ]; then
             echo "OUTPUT=dist/crr-go.exe" >> $GITHUB_ENV
           else
             echo "OUTPUT=dist/crr-go" >> $GITHUB_ENV
           fi
 
       - name: Build
-        run: go build -v -o "$OUTPUT"
+        run: go build -v -o "${{ env.OUTPUT }}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: crr-go-${{ runner.os }}
-          path: "$OUTPUT"
+          path: "${{ env.OUTPUT }}"
