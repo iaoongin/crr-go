@@ -31,10 +31,10 @@ jobs:
           fi
 
       - name: Build
-        run: go build -v -o "${{ env.OUTPUT }}"
+        run: go build -v -o $OUTPUT
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: crr-go-${{ runner.os }}
-          path: "${{ env.OUTPUT }}"
+          path: $OUTPUT
