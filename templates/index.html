@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clash Template Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/yaml/yaml.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+        }
+
+        button {
+            margin: 10px 0;
+            padding: 5px 10px;
+        }
+
+        .CodeMirror { 
+            border: 1px solid #ddd; 
+            height: auto;
+        }
+
+        select {
+            padding: 6px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            /* width: calc(100% - 22px); */
+             /* Account for padding and border */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <h1>Clash Template Manager</h1> -->
+    <div>
+        <button onclick="saveTemplate()">Save</button>
+        <!-- <button onclick="restoreTemplate()">Restore to Last Backup</button> -->
+        <select id="backupList"></select>
+        <button onclick="rollbackToBackup()">Rollback to Selected</button>
+    </div>
+
+    <textarea id="templateContent"></textarea>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("templateContent"), {
+            mode: "yaml",
+            lineNumbers: true,
+            theme: "default"
+        });
+        function fetchTemplate() {
+            fetch('/api/template')
+                .then(response => response.text())
+                .then(data => {
+                    editor.setValue(data);
+                });
+        }
+
+        function saveTemplate() {
+            const content = editor.getValue();
+            fetch('/api/template', {
+                method: 'POST',
+                body: content
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    fetchBackups();
+                });
+        }
+
+        function restoreTemplate() {
+            fetch('/api/template/restore', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    fetchTemplate();
+                });
+        }
+
+        function fetchBackups() {
+            fetch('/api/backups')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('backupList');
+                    select.innerHTML = '';
+                    data.backups.forEach(backup => {
+                        const option = document.createElement('option');
+                        option.value = backup;
+                        option.textContent = backup;
+                        select.appendChild(option);
+                    });
+                });
+        }
+
+        function rollbackToBackup() {
+            const backup = document.getElementById('backupList').value;
+            if (!backup) {
+                alert('Please select a backup');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('file', backup);
+            fetch('/api/backups/rollback', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    fetchTemplate();
+                });
+        }
+
+        fetchTemplate();
+        fetchBackups();
+    </script>
+</body>
+
+</html>
