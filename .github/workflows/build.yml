@@ -22,18 +22,11 @@ jobs:
         with:
           go-version: '1.23'
 
-      - name: Set Output Variables For Windows
-        if: runner.os == 'Windows'
-        run: echo "OUTPUT=dist/crr-go.exe" >> $GITHUB_ENV
-      - name: Set Output Variables For Not Windows
-        if: runner.os != 'Windows'
-        run: echo "OUTPUT=dist/crr-go" >> $GITHUB_ENV
-
       - name: Build
-        run: go build -v -o "${{ env.OUTPUT }}"
+        run: go build -v -o dist/crr-go
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: crr-go-${{ runner.os }}
-          path: "${{ env.OUTPUT }}"
+          path: dist/crr-go
