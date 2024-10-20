@@ -11,6 +11,6 @@ go run .
 
 ## 访问 `http://127.0.0.1:8080/` 进行在线编辑
 
-[![image.png](http://www.cdnjson.com/images/2024/10/21/image.png)](http://www.cdnjson.com/image/a89bg)
+![效果预览](https://cdn-fusion.imgcdn.store/i/2024/a0a8c220ad9322b6.png)
 
 ## 转换订阅 `http://127.0.0.1:8080/api/process?url=你的订阅地址` 
