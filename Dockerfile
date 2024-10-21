@@ -3,7 +3,7 @@ FROM alpine
 # Set destination for COPY
 WORKDIR /app
 
-COPY dist/crr-go /docker-crr-go
+COPY dist/crr-go .
 
 # Optional:
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
@@ -13,4 +13,4 @@ COPY dist/crr-go /docker-crr-go
 EXPOSE 8080
 
 # Run
-CMD ["/docker-crr-go"]
+CMD ["/crr-go"]
