@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY dist/crr-go .
 
-RUN chmod +X ./crr-go
+RUN chmod +x ./crr-go
 
 # Optional:
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
