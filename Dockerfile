@@ -13,4 +13,4 @@ COPY dist/crr-go .
 EXPOSE 8080
 
 # Run
-CMD ["/crr-go"]
+CMD ["./crr-go"]
