@@ -3,7 +3,7 @@ FROM alpine
 # Set destination for COPY
 WORKDIR /app
 
-COPY dist/crr-go .
+COPY build/crr-go .
 
 RUN chmod +x ./crr-go
 
