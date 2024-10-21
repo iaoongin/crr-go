@@ -7,29 +7,29 @@ on:
       - main
 
 jobs:
-  # build:
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       os: [ubuntu-latest, macos-latest, windows-latest]
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
 
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-  #     - name: Set up Go
-  #       uses: actions/setup-go@v5
-  #       with:
-  #         go-version: '1.23'
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
 
-  #     - name: Build
-  #       run: go build -v -o dist/crr-go
+      - name: Build
+        run: go build -v -o dist/crr-go
 
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: crr-go-${{ runner.os }}
-  #         path: dist/crr-go'
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: crr-go-${{ runner.os }}
+          path: dist/crr-go'
 
   push_to_registries:
     name: Push Docker image to registries
