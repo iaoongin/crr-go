@@ -31,11 +31,10 @@ kind: Service
 metadata:
   name: crr-go-service
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - port: 8080
-      targetPort: 8080
-      nodePort: 30002
+    - port: 18090
+      targetPort: 8090
   selector:
     app: crr-go
 
