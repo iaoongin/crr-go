@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	templateFile = "template.yaml"
-	backupDir    = "./backups"
+	templateFile = "./data/template.yaml"
+	backupDir    = "./data/backups"
 )
 
 type TemplateManager struct{}

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crr-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crr-go
+  template:
+    metadata:
+      labels:
+        app: crr-go
+    spec:
+      containers:
+      - name: crr-go
+        image: ghcr.io/iaoongin/crr-go:gh-actions-test
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /data
+          name: crr-go-data-volume
+      volumes:
+      - name: crr-go-data-volume
+        hostPath:
+          path: /data/crr-go
+          type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crr-go-service
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30002
+  selector:
+    app: crr-go
