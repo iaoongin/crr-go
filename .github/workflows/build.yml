@@ -84,10 +84,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Taggig
-      run: |
-      echo "imageTag=${{ github.run_number }}" >> $GITHUB_ENV
-
     - name: Render Kubernetes YAML
       run: |
         # 安装 envsubst
