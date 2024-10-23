@@ -73,7 +73,8 @@ jobs:
 
   delpy_to_k8s:
     runs-on: ubuntu-latest
-    needs: push_to_registries  
+    needs: push_to_registries
+    environment: default  # 指定环境
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -83,7 +84,7 @@ jobs:
         # 安装 envsubst
         sudo apt-get install gettext-base
         # 渲染 YAML 文件
-        envsubst < crr-go.yaml > rendered-crr-go.yaml.yaml
+        envsubst < crr-go.yaml > rendered-crr-go.yaml
 
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
@@ -98,4 +99,4 @@ jobs:
 
     - name: Apply Kubernetes manifest
       run: |
-        kubectl apply -f rendered-crr-go.yaml.yaml
+        kubectl apply -f rendered-crr-go.yaml
