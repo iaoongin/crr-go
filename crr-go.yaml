@@ -15,6 +15,7 @@ spec:
       containers:
       - name: crr-go
         image: ghcr.io/iaoongin/crr-go:gh-actions-test
+        imagePullPolicy: Always  # 确保每次都拉取最新的镜像
         ports:
         - containerPort: 8080
         volumeMounts:
