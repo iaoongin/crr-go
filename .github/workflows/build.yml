@@ -22,7 +22,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
+        with:
+          ref: ${{ github.ref_name }}
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -49,6 +50,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
       - uses: actions/download-artifact@master
         with:
@@ -84,7 +87,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+      with:
+        ref: ${{ github.ref_name }}
+        
     - name: Render Kubernetes YAML
       run: |
         # 安装 envsubst
