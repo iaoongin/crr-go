@@ -3,9 +3,9 @@ FROM alpine
 # Set destination for COPY
 WORKDIR /app
 
-COPY build/crr-go .
-COPY data/ .
-COPY templates/ .
+COPY build/crr-go ./
+COPY data/ ./data
+COPY templates/ ./templates
 
 RUN chmod +x ./crr-go
 
