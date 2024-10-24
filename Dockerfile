@@ -4,8 +4,8 @@ FROM alpine
 WORKDIR /app
 
 COPY build/crr-go .
-ADD data/ .
-ADD templates/ .
+ADD data data
+ADD templates templates
 
 RUN chmod +x ./crr-go
 
