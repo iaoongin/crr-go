@@ -117,5 +117,5 @@ jobs:
 
     - name: Apply Kubernetes manifest
       run: |
-        kubectl delete -f rendered-crr-go.yaml
+        kubectl delete -f rendered-crr-go.yaml || true
         kubectl apply -f rendered-crr-go.yaml
