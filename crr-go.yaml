@@ -67,7 +67,7 @@ spec:
   tls:
   - hosts:
     - ${DOMAIN}  # 请替换为你的域名
-    secretName: ${CERT_MANAGER} # 证书提供者
+  secretName: ${CERT_MANAGER} # 证书提供者
 spec:
   rules:
   - host: ${DOMAIN}  # 替换为你的域名
