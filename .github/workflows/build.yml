@@ -83,13 +83,12 @@ jobs:
   delpy_to_k8s:
     runs-on: ubuntu-latest
     needs: push_to_registries
-    environment: default  # 指定环境
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
         ref: ${{ github.ref_name }}
-        
+
     - name: Render Kubernetes YAML
       run: |
         # 安装 envsubst
