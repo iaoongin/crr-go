@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: crr-go-service
+  name: crr-go
 spec:
   type: ClusterIP
   ports:
@@ -61,12 +61,11 @@ kind: Ingress
 metadata:
   name: crr-go-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: ${CERT_MANAGER} # 证书提供者
 spec:
   tls:
   - hosts:
-      - ${DOMAIN}  # 请替换为你的域名
+    - ${DOMAIN}  # 请替换为你的域名
     secretName: ${CERT_MANAGER} # 证书提供者
 spec:
   rules:
@@ -77,6 +76,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: crr-go-service
+            name: crr-go
             port:
               number: 30002
