@@ -80,6 +80,8 @@ jobs:
         id: push
         uses: docker/build-push-action@v6
         with:
+          context: .  # 设置上下文为当前目录
+          file: ./Dockerfile  # 指定 Dockerfile 的相对路径
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
