@@ -98,11 +98,26 @@ func mergeConfigs(local, remote ClashConfig) ClashConfig {
 	}
 
 	// 只替换 proxies 和 proxy-groups
-	if proxies, ok := remote["proxies"]; ok {
+	if proxies, ok := remote["proxies"].([]interface{}); ok {
 		merged["proxies"] = proxies
-	}
-	if proxyGroups, ok := remote["proxy-groups"]; ok {
-		merged["proxy-groups"] = proxyGroups
+
+		// 提取proxies里面的name字段，并将其添加到merged的proxies-groups的proxies中
+		for _, p := range proxies {
+			if proxy, ok := p.(map[interface{}]interface{}); ok {
+				if name, ok := proxy["name"].(string); ok {
+					if groups, ok := merged["proxy-groups"].([]interface{}); ok {
+						for _, g := range groups {
+							if group, ok := g.(map[interface{}]interface{}); ok {
+								if groupProxies, ok := group["proxies"].([]interface{}); ok {
+									groupProxies = append(groupProxies, name)
+									group["proxies"] = groupProxies
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	return merged
