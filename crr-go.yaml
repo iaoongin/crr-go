@@ -18,7 +18,7 @@ spec:
         ports:
         - containerPort: 8080
         volumeMounts:
-        - mountPath: /data
+        - mountPath: /app/data
           name: crr-go-data-volume
       volumes:
       - name: crr-go-data-volume
