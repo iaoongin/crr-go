@@ -102,19 +102,19 @@ func mergeConfigs(local, remote ClashConfig) ClashConfig {
 		merged["proxies"] = proxies
 
 		// 提取proxies里面的name字段，并将其添加到merged的proxies-groups的proxies中
+		proxyNames := make([]string, 0)
 		for _, p := range proxies {
 			if proxy, ok := p.(map[interface{}]interface{}); ok {
 				if name, ok := proxy["name"].(string); ok {
-					if groups, ok := merged["proxy-groups"].([]interface{}); ok {
-						for _, g := range groups {
-							if group, ok := g.(map[interface{}]interface{}); ok {
-								if groupProxies, ok := group["proxies"].([]interface{}); ok {
-									groupProxies = append(groupProxies, name)
-									group["proxies"] = groupProxies
-								}
-							}
-						}
-					}
+					proxyNames = append(proxyNames, name)
+				}
+			}
+		}
+
+		if groups, ok := merged["proxy-groups"].([]interface{}); ok {
+			for _, g := range groups {
+				if group, ok := g.(map[interface{}]interface{}); ok {
+					group["proxies"] = proxyNames
 				}
 			}
 		}
